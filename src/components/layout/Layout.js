@@ -1,10 +1,9 @@
 import { useState } from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import Sidebar from './Sidebar';
 
-import Header from '../../layout/Header';
-import Footer from '../../layout/Footer';
-import Sidebar from '../../layout/Sidebar';
-
-const Form = () => {
+const Layout = ({ style, children }) => {
   const [nav, setNav] = useState(false);
 
   const handleToggle = () => {
@@ -17,8 +16,8 @@ const Form = () => {
       <div className="main-content">
         <Header toggleNav={handleToggle} />
         <main className="main">
-          <div className="container">
-            <h2>Single form screen</h2>
+          <div className="container" style={style}>
+            {children}
           </div>
         </main>
         <Footer />
@@ -27,4 +26,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Layout;

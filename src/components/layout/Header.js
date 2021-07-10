@@ -42,7 +42,7 @@ const Header = ({ history, toggleNav }) => {
 
         <div className="me-3 user-select-none">
           <h4 className="fs-6">Jane Doe Jane</h4>
-          <small className="d-inline-block">Super Admin</small>
+          <small className="d-inline-block text-muted">User</small>
         </div>
 
         <span className="fas fa-angle-down"></span>
@@ -60,12 +60,6 @@ const Header = ({ history, toggleNav }) => {
 
           <Link to="/profile" className="p-1 m-1 d-flex align-items-center">
             <span className="fas fa-user me-3"></span> <span>Profile</span>
-          </Link>
-          <Link to="/signin" className="p-1 m-1 d-flex align-items-center">
-            <span className="fas fa-lock me-3"></span> <span>Lock</span>
-          </Link>
-          <Link to="/signin" className="p-1 m-1 d-flex align-items-center">
-            <span className="fas fa-power-off me-3"></span> <span>Logout</span>
           </Link>
           <span
             onClick={() => signout(() => history.push('/signin'))}

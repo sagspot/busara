@@ -1,17 +1,17 @@
+import axios from 'axios';
+import qs from 'qs';
+
 import { baseurl } from '../../config';
 
-export const signin = (user) => {
-  return fetch(`${baseurl}/api/v1/oauth/token/`, {
+export const signin = async (user) => {
+  const options = {
     method: 'POST',
-    headers: {
-      Accept: 'application/x-www-form-urlencoded',
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-
-    body: JSON.stringify(user),
-  })
-    .then((response) => response.json())
-    .catch((err) => console.error(err));
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    data: qs.stringify(user),
+    url: `${baseurl}/api/v1/oauth/token/`,
+  };
+  const response = await axios(options);
+  return response;
 };
 
 export const authenticate = (data, next) => {
@@ -26,4 +26,13 @@ export const signout = (next) => {
     localStorage.removeItem('access_token');
     next();
   }
+};
+
+export const isAuthenticated = () => {
+  if (typeof window == 'undefined') return false;
+
+  if (localStorage.getItem('access_token'))
+    return JSON.parse(localStorage.getItem('access_token'));
+
+  return false;
 };
