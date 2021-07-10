@@ -1,0 +1,67 @@
+import './sidebar.scss';
+import { NavLink } from 'react-router-dom';
+import busaraIcon from '../../assets/busara-icon.png';
+import busaraLogo from '../../assets/busara-logo.png';
+
+const Sidebar = ({ nav, toggleNav }) => {
+  return (
+    <div
+      className={`sidebar position-fixed top-0 start-0 h-100 ${
+        nav ? 'sidebar-sm' : ''
+      }`}
+    >
+      <span
+        className="
+          nav-close
+          fas
+          fa-times
+          position-absolute
+          translate-middle
+          fs-1
+          cursor-p
+        "
+        onClick={toggleNav}
+      ></span>
+      <div className="sidebar-brand ps-4 py-3">
+        <h2 className="ps-3 d-flex align-items-center">
+          <span>
+            <img src={busaraIcon} alt="" className="pe-2 busara-icon" />
+          </span>
+          <span className="fs-3 text-nowrap">
+            <img src={busaraLogo} alt="" className="busara-logo" />
+          </span>
+        </h2>
+      </div>
+
+      <div className="sidebar-menu mt-3 ps-4">
+        <ul className="p-0">
+          <li className="w-100 mb-4">
+            <NavLink
+              exact
+              activeClassName="active"
+              to="/"
+              className="sidebar-menu-link text-white p-3 d-flex align-items-center  open"
+            >
+              <span className="fas fa-tachometer-alt pe-3"></span>
+              <span className="text-nowrap">Forms</span>
+            </NavLink>
+          </li>
+
+          <li className="w-100 mb-4">
+            <NavLink
+              exact
+              activeClassName="active"
+              to="newform"
+              className="sidebar-menu-link text-white p-3 d-flex align-items-center"
+            >
+              <span className="fas fa-tachometer-alt pe-3"></span>
+              <span className="text-nowrap">Fill Form</span>
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;

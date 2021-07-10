@@ -1,0 +1,115 @@
+@use '../sass/abstracts' as *;
+
+.header {
+  left: 288px;
+  width: calc(100% - 288px);
+  z-index: 100;
+  transition: left 300ms, width 300ms;
+  @include xs {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  @include pc-lg {
+    width: calc(100% - 80px);
+    left: 80px;
+  }
+  @include pc-md {
+    width: 100%;
+    left: 0;
+  }
+
+  h2 {
+    white-space: nowrap;
+    color: $text-color;
+    div {
+      @include xs {
+        display: none !important;
+      }
+    }
+    span {
+      @include pc-md {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: 40px;
+        font-size: 1.25rem;
+        padding: 0 !important;
+        border-radius: 50%;
+        color: white;
+        background: $pri-brand;
+      }
+    }
+  }
+
+  h2,
+  .user {
+    > span {
+      font-size: 1.7rem;
+    }
+  }
+}
+
+.user {
+  .img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    font-size: 40px !important;
+  }
+  > div:first-of-type {
+    @include xs {
+      display: none;
+    }
+  }
+
+  h4 {
+    margin-bottom: -3px;
+  }
+
+  small {
+    color: lighten($color: $text-color, $amount: 0.4);
+    margin-top: -3px !important;
+  }
+
+  > span {
+    color: lighten($color: $text-color, $amount: 0.4);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &-dropdown {
+    transform: translateY(-20%);
+    visibility: hidden;
+    opacity: 0;
+    top: 130%;
+    min-width: 11.25rem;
+    border-radius: 0 0 4px 4px;
+    background: $pri-brand;
+    transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out,
+      opacity 0.3s ease-in-out;
+    a {
+      border-radius: 2px;
+    }
+    a:hover {
+      background: lighten($color: $pri-brand, $amount: 0.5);
+    }
+    span {
+      top: -5%;
+      color: white;
+    }
+    > span {
+      color: $pri-brand;
+    }
+  }
+  &.open {
+    > span {
+      transform: rotate(180deg);
+    }
+    .user-dropdown {
+      transform: translateY(0);
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}

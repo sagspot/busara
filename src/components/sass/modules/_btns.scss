@@ -1,0 +1,11 @@
+@use '../abstracts' as *;
+
+.btn-brand {
+  background: $pri-brand;
+  svg {
+    margin-right: 8px;
+  }
+  &:hover {
+    background: lighten($color: $pri-brand, $amount: 0.5);
+  }
+}

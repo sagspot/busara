@@ -1,0 +1,63 @@
+// ====================== Bootstrap breakpoints ======================
+
+@mixin xs {
+  @media (max-width: 575px) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media (min-width: 576px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: 992px) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin xxl {
+  @media (min-width: 1400px) {
+    @content;
+  }
+}
+
+// ====================== PC first breakpoints ======================
+
+@mixin pc-md {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin pc-sm {
+  @media (max-width: 991px) {
+    @content;
+  }
+}
+
+@mixin pc-lg {
+  @media (max-width: 1199px) {
+    @content;
+  }
+}
+
+@mixin pc-xl {
+  @media (max-width: 1399px) {
+    @content;
+  }
+}

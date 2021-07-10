@@ -1,0 +1,21 @@
+@use '../abstracts' as *;
+
+.cursor-p {
+  cursor: pointer;
+}
+.my-bg-pri {
+  background: $pri-brand;
+  transition: background 0.1s ease-in-out;
+}
+.my-bg-pri-hover {
+  background: lighten($color: $pri-brand, $amount: 0.5);
+  transition: background 0.1s ease-in-out;
+}
+.my-bg-sec {
+  background: $sec-brand;
+  transition: background 0.1s ease-in-out;
+}
+.my-bg-sec-hover {
+  background: lighten($color: $sec-brand, $amount: 0.5);
+  transition: background 0.1s ease-in-out;
+}

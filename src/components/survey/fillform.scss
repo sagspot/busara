@@ -1,0 +1,47 @@
+@use '../sass/abstracts' as *;
+
+.tabs {
+  padding: 15px;
+  background: rgba(128, 128, 128, 0.075);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+  box-sizing: content-box;
+  outline: none;
+
+  &:not(:last-child) {
+    border-right: 1px solid rgba(0, 0, 0, 0.274);
+  }
+}
+
+.active {
+  &-tabs {
+    background: white;
+    border-bottom: 1px solid transparent;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% + 2px);
+      height: 5px;
+      background: $pri-brand;
+    }
+  }
+
+  &-content {
+    display: block !important;
+  }
+}
+
+button {
+  border: none;
+}
+
+.content {
+  &-tabs {
+    flex-grow: 1;
+  }
+}
