@@ -16,10 +16,10 @@ function App() {
       <Switch>
         <Route path="/signin" exact component={Signin} />
         <Route path="/reset-password" exact component={ResetPass} />
-        <Route path="/" exact component={Forms} />
+        <PrivateRoute path="/" exact component={Forms} />
         <PrivateRoute path="/profile" exact component={Profile} />
-        <Route path="/newform" exact component={Form} />
-        <Route path="/:id" component={FormDetail} />
+        <PrivateRoute path="/newform" exact component={Form} />
+        <PrivateRoute path="/:id" component={FormDetail} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
