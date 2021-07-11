@@ -3,6 +3,9 @@
 .cursor-p {
   cursor: pointer;
 }
+.pri-brand {
+  color: $pri-brand;
+}
 .my-bg-pri {
   background: $pri-brand;
   transition: background 0.1s ease-in-out;
