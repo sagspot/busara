@@ -3,6 +3,7 @@ import Layout from '../layout/Layout';
 import axios from 'axios';
 import { baseurl } from '../../config';
 import { useState, useEffect } from 'react';
+import Loading from '../layout/Loading';
 
 const Profile = () => {
   useEffect(() => {
@@ -26,11 +27,7 @@ const Profile = () => {
     }
   };
 
-  const showLoading = () => (
-    <div className="alert alert-info text-center mt-3">
-      <h2>Loading...</h2>
-    </div>
-  );
+  const showLoading = () => <Loading />;
 
   const showProfile = () => (
     <section className="card mt-3">

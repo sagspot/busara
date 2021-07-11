@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Layout from '../../layout/Layout';
 import axios from 'axios';
 import { baseurl } from '../../../config';
+import Loading from '../../layout/Loading';
 
 const Forms = () => {
   useEffect(() => {
@@ -25,17 +26,12 @@ const Forms = () => {
       );
       setLoading(false);
       setForms(response.data.forms);
-      console.log(response.data.forms);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const showLoading = () => (
-    <div className="alert alert-info text-center">
-      <h2>Loading...</h2>
-    </div>
-  );
+  const showLoading = () => <Loading />;
 
   const formatDate = (string) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };

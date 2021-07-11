@@ -42,7 +42,7 @@ const Sidebar = ({ nav, toggleNav }) => {
               to="/"
               className="sidebar-menu-link text-white p-3 d-flex align-items-center  open"
             >
-              <span className="fas fa-tachometer-alt pe-3"></span>
+              <span className="fas fa-file-alt pe-3"></span>
               <span className="text-nowrap">Forms</span>
             </NavLink>
           </li>
@@ -54,7 +54,7 @@ const Sidebar = ({ nav, toggleNav }) => {
               to="newform"
               className="sidebar-menu-link text-white p-3 d-flex align-items-center"
             >
-              <span className="fas fa-tachometer-alt pe-3"></span>
+              <span className="fas fa-edit pe-3"></span>
               <span className="text-nowrap">Fill Form</span>
             </NavLink>
           </li>

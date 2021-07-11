@@ -161,9 +161,16 @@ const FillForm = ({ submitForm }) => {
             {errors.gender && (
               <p className="text-danger mb-3">{errors.gender}</p>
             )}
-            <button className="btn btn-primary" onClick={nextClick}>
-              Next
-            </button>
+
+            <div className="d-flex mb-3">
+              <button
+                className="ms-auto btn text-white my-bg-pri"
+                onClick={nextClick}
+              >
+                Next
+                <span className="fas fa-angle-right ms-3"></span>
+              </button>
+            </div>
           </div>
 
           <div
@@ -194,7 +201,11 @@ const FillForm = ({ submitForm }) => {
               <p className="text-danger mb-3">{errors.education}</p>
             )}
             <div className="d-flex justify-content-between align-items-center">
-              <button className="btn btn-primary" onClick={previousClick}>
+              <button
+                className="btn text-white my-bg-pri"
+                onClick={previousClick}
+              >
+                <span className="fas fa-angle-left me-3"></span>
                 Previous
               </button>
               <input type="submit" value="Submit" className="btn btn-success" />
