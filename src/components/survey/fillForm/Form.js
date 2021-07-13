@@ -1,8 +1,7 @@
 import { useState } from 'react';
-
 import FillForm from './FillForm';
-import FormSuccess from './FormSuccess';
 import Layout from '../../layout/Layout';
+import FormSuccess from './fillFormComponents/FormSuccess';
 
 const Form = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -10,7 +9,7 @@ const Form = () => {
   const submitForm = () => setIsSubmitted(true);
 
   return (
-    <Layout style={{ maxWidth: '768px' }}>
+    <Layout style={{ maxWidth: '768px' }} title="New Survey">
       {!isSubmitted ? <FillForm submitForm={submitForm} /> : <FormSuccess />}
     </Layout>
   );

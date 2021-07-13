@@ -38,6 +38,10 @@
 
 button {
   border: none;
+  &:disabled {
+    pointer-events: unset !important;
+    cursor: no-drop;
+  }
 }
 
 .content {

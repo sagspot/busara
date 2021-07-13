@@ -164,7 +164,11 @@ const FormDetail = ({ match }) => {
     </div>
   );
 
-  return <Layout>{loading ? showLoading() : showItem()}</Layout>;
+  return (
+    <Layout title="Survey Details">
+      {loading ? showLoading() : showItem()}
+    </Layout>
+  );
 };
 
 export default FormDetail;

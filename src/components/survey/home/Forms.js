@@ -72,7 +72,9 @@ const Forms = () => {
     </section>
   );
 
-  return <Layout>{loading ? showLoading() : showForms()}</Layout>;
+  return (
+    <Layout title="Surveys">{loading ? showLoading() : showForms()}</Layout>
+  );
 };
 
 export default Forms;

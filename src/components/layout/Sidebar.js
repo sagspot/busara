@@ -23,14 +23,14 @@ const Sidebar = ({ nav, toggleNav }) => {
         onClick={toggleNav}
       ></span>
       <div className="sidebar-brand ps-4 py-3">
-        <h2 className="ps-3 d-flex align-items-center">
+        <NavLink to="/" className="ps-3 d-flex align-items-center">
           <span>
             <img src={busaraIcon} alt="" className="pe-2 busara-icon" />
           </span>
           <span className="fs-3 text-nowrap">
             <img src={busaraLogo} alt="" className="busara-logo" />
           </span>
-        </h2>
+        </NavLink>
       </div>
 
       <div className="sidebar-menu mt-3 ps-4">
@@ -43,7 +43,7 @@ const Sidebar = ({ nav, toggleNav }) => {
               className="sidebar-menu-link text-white p-3 d-flex align-items-center  open"
             >
               <span className="fas fa-file-alt pe-3"></span>
-              <span className="text-nowrap">Forms</span>
+              <span className="text-nowrap">Surveys</span>
             </NavLink>
           </li>
 
@@ -51,11 +51,11 @@ const Sidebar = ({ nav, toggleNav }) => {
             <NavLink
               exact
               activeClassName="active"
-              to="newform"
+              to="new-survey"
               className="sidebar-menu-link text-white p-3 d-flex align-items-center"
             >
               <span className="fas fa-edit pe-3"></span>
-              <span className="text-nowrap">Fill Form</span>
+              <span className="text-nowrap">New Survey</span>
             </NavLink>
           </li>
         </ul>

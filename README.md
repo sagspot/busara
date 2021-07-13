@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Data Collection App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A data collection frontend app
 
-## Available Scripts
+### Version
 
-In the project directory, you can run:
+1.0.0
 
-### `yarn start`
+## Table of Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [General Info](#general-information)
+- [Technologies Used](#technologies-used)
+- [Usage](#usage)
+- [Environment variables](#environment-variables)
+- [Project Status](#project-status)
+- [Room for Improvement](#room-for-improvement)
+- [Acknowledgements](#acknowledgements)
+- [Contact](#contact)
+<!-- * [License](#license) -->
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## General Information
 
-### `yarn test`
+This is a frontend of a data collection app. Pages can only be accessed while a user is authenticated.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once a registered user signs in, they are presented with all surveys they have completed. Clicking an individual survey opens details of that specific survey.
 
-### `yarn build`
+A user can also view their profile and can start a new survey.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React
+- Bootstrap
+- SCSS
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `yarn eject`
+- Create an account from Busara website, and request client secret and id
+- Login to your account, with your email, secret given and password to get a token
+- Access dashboard to view all surveys completed by user
+- Click on individual survey to view details of that survey _(Currently has dummy data as the server contains no filled survey)_
+- Start a new survey from the `Start Survey` menu
+- View your profile or logout from the user icon on top-left of the screen
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Environment variables
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`CHOKIDAR_USEPOLLING=true`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`REACT_APP_API_URL=http://fullstack-role.busara.io`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Project Status
 
-## Learn More
+Project is: _complete_ .
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Room for Improvement
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Get data from server and populate fields of survey details
+- Get `Forgot password` link to work
 
-### Code Splitting
+## Acknowledgements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- This project was inspired by the [Busara Team](https://busaracenter.org/).
 
-### Analyzing the Bundle Size
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Author
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Oliver Sagala
+[Sagspot](https://github.com/sagspot)

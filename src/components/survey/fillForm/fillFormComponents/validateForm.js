@@ -1,4 +1,4 @@
-const validateForm = (values) => {
+const validate = (values) => {
   let errors = {};
 
   if (!values.first_name) {
@@ -7,8 +7,12 @@ const validateForm = (values) => {
   if (!values.last_name) {
     errors.last_name = 'Last name required';
   }
+  const contactFormat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   if (!values.contact) {
     errors.contact = 'Contact required';
+  } else if (!values.contact.match(contactFormat)) {
+    errors.contact =
+      'Please enter a valid phone number. Start with <07...> or <01...> with no spaces';
   }
   if (!values.country) {
     errors.country = 'Country required';
@@ -31,4 +35,4 @@ const validateForm = (values) => {
   return errors;
 };
 
-export default validateForm;
+export default validate;

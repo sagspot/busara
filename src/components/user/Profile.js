@@ -32,7 +32,6 @@ const Profile = () => {
   const showProfile = () => (
     <section className="card mt-3">
       <div className="card-body ">
-        <h2 className="fs-3">Personal Information</h2>
         <div className="profile-content mt-3">
           <div className="row align-items-center ">
             <h3 className="col-4 text-uppercase m-0 text-muted">Name</h3>
@@ -55,15 +54,24 @@ const Profile = () => {
             <h3 className="col-4 text-uppercase m-0 text-muted">Email</h3>
             <p className="col-8 fs-5 m-0">{profile.email}</p>
           </div>
+
+          <hr />
+
+          <div className="row align-items-center ">
+            <h3 className="col-4 text-uppercase m-0 text-muted">
+              Approval Level
+            </h3>
+            <p className="col-8 fs-5 m-0">{profile.approver_level}</p>
+          </div>
         </div>
       </div>
     </section>
   );
 
   return (
-    <Layout>
+    <Layout title="Profile">
       <section className="bg-white py-1 px-3">
-        <h1 className="pri-brand  fs-2">Profile</h1>
+        <h1 className="pri-brand  fs-2">Personal Information</h1>
       </section>
 
       {loading ? showLoading() : showProfile()}

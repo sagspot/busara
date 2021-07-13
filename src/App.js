@@ -18,7 +18,7 @@ function App() {
         <Route path="/reset-password" exact component={ResetPass} />
         <PrivateRoute path="/" exact component={Forms} />
         <PrivateRoute path="/profile" exact component={Profile} />
-        <PrivateRoute path="/newform" exact component={Form} />
+        <PrivateRoute path="/new-survey" exact component={Form} />
         <PrivateRoute path="/:id" component={FormDetail} />
         <Route path="*" component={NotFound} />
       </Switch>

@@ -3,7 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
 
-const Layout = ({ style, children }) => {
+const Layout = ({ style, children, title }) => {
   const [nav, setNav] = useState(false);
 
   const handleToggle = () => {
@@ -14,7 +14,7 @@ const Layout = ({ style, children }) => {
     <>
       <Sidebar nav={nav} toggleNav={handleToggle} />
       <div className="main-content">
-        <Header toggleNav={handleToggle} />
+        <Header toggleNav={handleToggle} title={title} />
         <main className="main">
           <div className="container" style={style}>
             {children}
