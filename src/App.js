@@ -7,6 +7,7 @@ import Profile from './components/user/Profile';
 import Forms from './components/survey/home/Forms';
 import FormDetail from './components/survey/form/FormDetail';
 import NewSurvey from './components/survey/fillForm/NewSurvey';
+import NewSurveyForm from './components/survey/fillForm/NewSurveyForm';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/auth/PrivateRoute';
 
@@ -19,7 +20,8 @@ function App() {
         <PrivateRoute path="/" exact component={Forms} />
         <PrivateRoute path="/profile" exact component={Profile} />
         <PrivateRoute path="/new-survey" exact component={NewSurvey} />
-        <PrivateRoute path="/:id" component={FormDetail} />
+        <PrivateRoute path="/new-survey/:id" exact component={NewSurveyForm} />
+        <PrivateRoute path="/:id" exact component={FormDetail} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

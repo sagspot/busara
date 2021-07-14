@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import { baseurl } from '../../../../config';
+import { useParams } from 'react-router-dom';
 
 const useForm = (callback, validate) => {
   useEffect(() => {
-    getFormFields(2)
+    getFormFields()
   }, [])
+
+  
   
   const [values, setValues] = useState({
     first_name: '',
@@ -25,8 +28,6 @@ const useForm = (callback, validate) => {
     user: '',
     surveyID: ''
   });
-
-  const [loading, setLoading] = useState(true)
 
   const [formCondition, setFormCondition] = useState({
     hasErrors: false,
@@ -54,66 +55,93 @@ const useForm = (callback, validate) => {
     user,
   } = values;
 
-  const submittedData = {
-    local_id: 8,
-    start_time: startTime,
-    location: {
-      lon: 0.0,
-      accuracy: 0.0,
-      lat: 0.0,
-    },
-    ans: [
-      {
-        q_id: '1',
-        q_ans: first_name,
-        column_match: 'first_name',
+  const dataSchema = [
+    {
+      local_id: 8,
+      start_time: startTime,
+      location: {
+        lon: 0.0,
+        accuracy: 0.0,
+        lat: 0.0
       },
-      {
-        q_id: '2',
-        q_ans: last_name,
-        column_match: 'last_name',
-      },
-      {
-        q_id: '3',
-        q_ans: contact,
-        column_match: 'contact',
-      },
-      {
-        q_id: '4',
-        q_ans: country,
-        column_match: 'country',
-      },
-      {
-        q_id: '5',
-        q_ans: county,
-        column_match: 'county',
-      },
-      {
-        q_id: '6',
-        q_ans: constituency,
-        column_match: 'constituency',
-      },
-      {
-        q_id: '7',
-        q_ans: ward,
-        column_match: 'ward',
-      },
-      {
-        q_id: '11',
-        q_ans: gender,
-        column_match: 'gender',
-      },
-      {
-        q_id: '10',
-        q_ans: education,
-        column_match: 'education',
-      },
-    ],
-    user: user,
-    survey_id: surveyID,
-    end_time: endTime,
-  };
+      ans: [
+        {
+          q_id: '1',
+          q_ans: first_name,
+          column_match: 'first_name',
+        },
+        {
+          q_id: '2',
+          q_ans: last_name,
+          column_match: 'last_name',
+        },
+        {
+          q_id: '3',
+          q_ans: contact,
+          column_match: 'contact',
+        },
+        {
+          q_id: '4',
+          q_ans: country,
+          column_match: 'country',
+        },
+        {
+          q_id: '5',
+          q_ans: county,
+          column_match: 'county',
+        },
+        {
+          q_id: '6',
+          q_ans: constituency,
+          column_match: 'constituency',
+        },
+        {
+          q_id: '7',
+          q_ans: ward,
+          column_match: 'ward',
+        },
+        {
+          q_id: '11',
+          q_ans: gender,
+          column_match: 'gender',
+        },
+        {
+          q_id: '10',
+          q_ans: education,
+          column_match: 'education',
+        },
+      ],
+      user: user,
+      survey_id: surveyID,
+      end_time: endTime,
+    }
+  ]
 
+  const { id } = useParams()
+  const getFormFields = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem('access_token'));
+      const response = await axios.get(
+        `${baseurl}/api/v1/recruitment/forms/?node_type=Both`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const formArr = await response.data.forms.filter(
+        (form) => form.id === parseInt(id)
+      );
+      const [details] = formArr;
+      const [page1, page2] = details.pages;
+      const [page1Qtns] = page1.sections
+      const [page2Qtns] = page2.sections
+      setValues({...values,surveyID:details.id })
+      
+    setFormCondition({ ...formCondition, pageOne: page1Qtns.questions, pageTwo: page2Qtns.questions });
+    } catch (err) {
+      console.log(err);
+    }
+};
 
   const startSurvey = (e) => {
     const startTimeDiv = e.currentTarget.nextElementSibling;
@@ -196,19 +224,16 @@ const useForm = (callback, validate) => {
 
       if (!formCondition.hasErrors) {
         setFormCondition({ ...formCondition, submitting: true });
-        const submitDat = { ...submittedData, end_time: moment().format() };
-        submitData(submitDat);
+        const data = [{ ...dataSchema[0], end_time: moment().format() }];
+        submitDat(data);
       } 
-
       return formErrors;
     });
   };
 
-  const submitData = async (submittedData) => {
+  const submitDat = async (data) => {
     try {
       const token = JSON.parse(localStorage.getItem('access_token'));
-
-
       const response = await axios.post(
         `${baseurl}/api/v1/recruitment/answers/submit/`,
         {
@@ -218,7 +243,7 @@ const useForm = (callback, validate) => {
             HTTP_VERSIONCODE: 200,
             VERSIONCODE: 200,
           },
-          submittedData,
+          data,
         }
       );
       console.log(response);
@@ -242,42 +267,8 @@ const useForm = (callback, validate) => {
     }
   };
 
-
-  const getFormFields = async (id) => {
-    try {
-      const token = JSON.parse(localStorage.getItem('access_token'));
-
-      const response = await axios.get(
-        `${baseurl}/api/v1/recruitment/forms/?node_type=Both`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      const formArr = await response.data.forms.filter(
-        (form) => form.id === id
-      );
-      const [details] = formArr;
-      const [page1, page2] = details.pages;
-
-      const [page1Qtns] = page1.sections
-      const [page2Qtns] = page2.sections
-      setValues({...values,surveyID:details.id })
-      
-        setLoading(false)
-      
-    setFormCondition({ ...formCondition, pageOne: page1Qtns.questions, pageTwo: page2Qtns.questions });
-    } catch (err) {
-      console.log(err.response);
-    }
-};
-
-
-
-
 const { hasErrors, page,pageOne,pageTwo, submitting, submitFail, submitError } =
-  formCondition;
-  
+  formCondition;  
 
   return {
     startSurvey,

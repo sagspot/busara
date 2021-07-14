@@ -1,4 +1,4 @@
-import './form.scss';
+import '../form.scss';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../../layout/Layout';
