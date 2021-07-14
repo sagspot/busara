@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import { baseurl } from '../../../../config';
-import { useParams } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 
 const useForm = (callback, validate) => {
+  const id = parseInt(useRouteMatch().params.id);
   useEffect(() => {
-    getFormFields()
-  }, [])
+    getFormFields(id);
+  }, []);
 
-  
-  
   const [values, setValues] = useState({
     first_name: '',
     last_name: '',
@@ -26,7 +25,7 @@ const useForm = (callback, validate) => {
     surveyEnded: false,
     endTime: '',
     user: '',
-    surveyID: ''
+    surveyID: '',
   });
 
   const [formCondition, setFormCondition] = useState({
@@ -62,7 +61,7 @@ const useForm = (callback, validate) => {
       location: {
         lon: 0.0,
         accuracy: 0.0,
-        lat: 0.0
+        lat: 0.0,
       },
       ans: [
         {
@@ -114,11 +113,10 @@ const useForm = (callback, validate) => {
       user: user,
       survey_id: surveyID,
       end_time: endTime,
-    }
-  ]
+    },
+  ];
 
-  const { id } = useParams()
-  const getFormFields = async () => {
+  const getFormFields = async (id) => {
     try {
       const token = JSON.parse(localStorage.getItem('access_token'));
       const response = await axios.get(
@@ -129,19 +127,23 @@ const useForm = (callback, validate) => {
       );
 
       const formArr = await response.data.forms.filter(
-        (form) => form.id === parseInt(id)
+        (form) => form.id === id
       );
       const [details] = formArr;
       const [page1, page2] = details.pages;
-      const [page1Qtns] = page1.sections
-      const [page2Qtns] = page2.sections
-      setValues({...values,surveyID:details.id })
-      
-    setFormCondition({ ...formCondition, pageOne: page1Qtns.questions, pageTwo: page2Qtns.questions });
+      const [page1Qtns] = page1.sections;
+      const [page2Qtns] = page2.sections;
+      setValues({ ...values, surveyID: details.id });
+
+      setFormCondition({
+        ...formCondition,
+        pageOne: page1Qtns.questions,
+        pageTwo: page2Qtns.questions,
+      });
     } catch (err) {
       console.log(err);
     }
-};
+  };
 
   const startSurvey = (e) => {
     const startTimeDiv = e.currentTarget.nextElementSibling;
@@ -154,7 +156,7 @@ const useForm = (callback, validate) => {
       ...values,
       surveyStarted: true,
       startTime: moment().format(),
-      user: profileID
+      user: profileID,
     });
 
     const formContainer = e.currentTarget.parentElement.nextElementSibling;
@@ -168,9 +170,10 @@ const useForm = (callback, validate) => {
     const errorContainer = e.currentTarget
       .closest('.my-form-input')
       .querySelector('.error');
-    if (!errorContainer.classList.contains('d-none')) errorContainer.classList.add('d-none');
+    if (!errorContainer.classList.contains('d-none'))
+      errorContainer.classList.add('d-none');
 
-    setFormCondition({...formCondition,hasErrors: false, submitFail: false});
+    setFormCondition({ ...formCondition, hasErrors: false, submitFail: false });
     setValues({ ...values, [name]: value });
   };
 
@@ -187,13 +190,13 @@ const useForm = (callback, validate) => {
   };
 
   const handleBlur = (e) => {
-    const emptyValue = !e.currentTarget.value
+    const emptyValue = !e.currentTarget.value;
     const errorContainer = e.currentTarget
       .closest('.my-form-input')
       .querySelector('.error');
     if (emptyValue) {
       errorContainer.classList.remove('d-none');
-      setFormCondition({...formCondition, hasErrors: true})
+      setFormCondition({ ...formCondition, hasErrors: true });
     }
   };
 
@@ -210,10 +213,10 @@ const useForm = (callback, validate) => {
       return formFields;
     });
 
-    const formInputs = e.currentTarget.querySelectorAll('input, select')
+    const formInputs = e.currentTarget.querySelectorAll('input, select');
     formInputs.forEach((formInput) => {
-      const emptyInput = formInput.value.length === 0
-      if(emptyInput)  setFormCondition({...formCondition, hasErrors: true})
+      const emptyInput = formInput.value.length === 0;
+      if (emptyInput) setFormCondition({ ...formCondition, hasErrors: true });
     });
 
     setFormCondition(() => {
@@ -226,7 +229,7 @@ const useForm = (callback, validate) => {
         setFormCondition({ ...formCondition, submitting: true });
         const data = [{ ...dataSchema[0], end_time: moment().format() }];
         submitDat(data);
-      } 
+      }
       return formErrors;
     });
   };
@@ -267,8 +270,15 @@ const useForm = (callback, validate) => {
     }
   };
 
-const { hasErrors, page,pageOne,pageTwo, submitting, submitFail, submitError } =
-  formCondition;  
+  const {
+    hasErrors,
+    page,
+    pageOne,
+    pageTwo,
+    submitting,
+    submitFail,
+    submitError,
+  } = formCondition;
 
   return {
     startSurvey,

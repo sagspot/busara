@@ -20,8 +20,8 @@ function App() {
         <PrivateRoute path="/" exact component={Forms} />
         <PrivateRoute path="/profile" exact component={Profile} />
         <PrivateRoute path="/new-survey" exact component={NewSurvey} />
-        <PrivateRoute path="/new-survey/:id" exact component={NewSurveyForm} />
         <PrivateRoute path="/:id" exact component={FormDetail} />
+        <PrivateRoute path="/new-survey/:id" exact component={NewSurveyForm} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

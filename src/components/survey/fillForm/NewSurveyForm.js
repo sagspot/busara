@@ -9,7 +9,7 @@ const NewSurvey = () => {
   const submitForm = () => setIsSubmitted(true);
 
   return (
-    <Layout style={{ maxWidth: '768px' }} title="New Survey">
+    <Layout style={{ maxWidth: '768px' }} title="New Survey Form">
       {!isSubmitted ? <FillSurvey submitForm={submitForm} /> : <FormSuccess />}
     </Layout>
   );

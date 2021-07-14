@@ -40,6 +40,8 @@ const Forms = () => {
   };
 
   const showForms = () => (
+    <>
+      <h2 className="text-center mb-3 pri-brand">Select a survey to start</h2>
     <section className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       {forms.map((form) => (
         <article className="col" key={form.id}>
@@ -70,7 +72,8 @@ const Forms = () => {
           </Link>
         </article>
       ))}
-    </section>
+      </section>
+      </>
   );
 
   return (
