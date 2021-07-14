@@ -23,7 +23,7 @@ export const authenticate = (data, next) => {
 
 export const signout = (next) => {
   if (typeof window !== 'undefined') {
-    localStorage.removeItem('access_token');
+    localStorage.clear();
     next();
   }
 };

@@ -2,8 +2,6 @@ import './header.scss';
 import { Link, withRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { signout } from '../auth';
-import axios from 'axios';
-import { baseurl } from '../../config';
 
 const Header = ({ history, toggleNav, title }) => {
   const handleUser = (e) => {
@@ -19,21 +17,9 @@ const Header = ({ history, toggleNav, title }) => {
   const { name, approver_level } = profileDetails;
 
   useEffect(() => {
-    getProfile();
+    const profile = JSON.parse(localStorage.getItem('user_profile'));
+    setProfileDetails(profile);
   }, []);
-
-  const getProfile = async () => {
-    try {
-      const token = JSON.parse(localStorage.getItem('access_token'));
-
-      const response = await axios.get(`${baseurl}/api/v1/users/current-user`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setProfileDetails(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <header

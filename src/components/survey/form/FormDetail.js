@@ -38,6 +38,7 @@ const FormDetail = ({ match }) => {
       console.log(res);
     }
   };
+  console.log(formDetails);
 
   const formatDate = (string) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };

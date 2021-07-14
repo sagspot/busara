@@ -6,7 +6,7 @@ import ResetPass from './components/user/ResetPass';
 import Profile from './components/user/Profile';
 import Forms from './components/survey/home/Forms';
 import FormDetail from './components/survey/form/FormDetail';
-import Form from './components/survey/fillForm/Form';
+import NewSurvey from './components/survey/fillForm/NewSurvey';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/auth/PrivateRoute';
 
@@ -18,7 +18,7 @@ function App() {
         <Route path="/reset-password" exact component={ResetPass} />
         <PrivateRoute path="/" exact component={Forms} />
         <PrivateRoute path="/profile" exact component={Profile} />
-        <PrivateRoute path="/new-survey" exact component={Form} />
+        <PrivateRoute path="/new-survey" exact component={NewSurvey} />
         <PrivateRoute path="/:id" component={FormDetail} />
         <Route path="*" component={NotFound} />
       </Switch>

@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { useState } from 'react';
+import { baseurl } from '../../config';
 import { authenticate, signin } from '../auth';
 
 const useSignin = () => {
@@ -38,9 +40,7 @@ const useSignin = () => {
 
       const access_token = response.data.access_token;
       authenticate(access_token, () => {
-        setLoading(false);
-        setSuccess(true);
-        setRedirectToReferrer(true);
+        saveProfile();
       });
     } catch (err) {
       const error =
@@ -50,6 +50,23 @@ const useSignin = () => {
 
       setLoading(false);
       setError(error);
+    }
+  };
+
+  const saveProfile = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem('access_token'));
+
+      const response = await axios.get(`${baseurl}/api/v1/users/current-user`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      localStorage.setItem('user_profile', JSON.stringify(response.data));
+      setLoading(false);
+      setSuccess(true);
+      setRedirectToReferrer(true);
+      return;
+    } catch (err) {
+      console.log(err.data);
     }
   };
 

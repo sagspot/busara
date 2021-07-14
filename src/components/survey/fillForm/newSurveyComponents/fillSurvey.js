@@ -1,55 +1,25 @@
-import './fillform.scss';
-import useForm from './fillFormComponents/useForm';
-import validate from './fillFormComponents/validateForm';
-import PageOneContent from './fillFormComponents/pageOneContent';
-import PageTwoContent from './fillFormComponents/pageTwoContent';
+import '../fillform.scss';
+import useForm from './useForm';
+import { errorToast, showFailed, showSubmitting } from './formHelpers';
+import PageOne from './surveyPages/pageOne';
+import PageTwo from './surveyPages/pageTwo';
 
-const FillForm = ({ submitForm }) => {
+const FillSurvey = ({ submitForm }) => {
   const {
+    startSurvey,
     handleChange,
-    handleSubmit,
     nextClick,
     previousClick,
+    handleBlur,
+    handleSubmit,
     hasErrors,
-    errors,
-    page,
-    startSurvey,
+    page,pageOne,pageTwo,
     submitting,
     submitFail,
     submitError,
-  } = useForm(submitForm, validate);
+  } = useForm(submitForm);
 
-  const errorToast = () =>
-    hasErrors && (
-      <div className="text-center bg-white text-danger m-0 pt-3">
-        <h2 className="m-0 fs-5 fst-italic">
-          Please correct errors before proceeding!
-        </h2>
-      </div>
-    );
-
-  const showSubmitting = () =>
-    submitting && (
-      <div className="alert-info m-0 pt-3 pb-2">
-        <h2 className="m-0 fs-5 text-center">
-          Submitting survey. Please wait...
-        </h2>
-      </div>
-    );
-
-  const { errStatus, errData } = submitError;
-
-  const showFailed = () =>
-    submitFail && (
-      <div className="alert-danger m-0 pt-3 pb-2">
-        <h2 className="m-0 fs-5 fst-italic text-center">
-          Oops! Something went wrong. Try again
-        </h2>
-        <p className="text-center mt-2">
-          <b>Status:</b> {errStatus}, <b>Info:</b> {errData}
-        </p>
-      </div>
-    );
+  const { errStatus, errData } = submitError; 
 
   return (
     <>
@@ -84,18 +54,22 @@ const FillForm = ({ submitForm }) => {
             Education
           </button>
         </div>
-        {errorToast()}
-        {showSubmitting()}
-        {showFailed()}
+        {hasErrors && errorToast()}
+        {submitting && showSubmitting()}
+        {submitFail && showFailed(errStatus, errData)}
         <div className="content-tabs">
           <div
             className={`content bg-white p-4 d-none w-100 h-100 ${
               page === 'bioData' && 'active-content'
             }`}
           >
-            <PageOneContent errors={errors} handleChange={handleChange} />
+            <PageOne
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              page1={pageOne}
+            />
 
-            <div className="d-flex mb-3">
+           <div className="d-flex mb-3">
               <button
                 className="ms-auto btn text-white my-bg-pri"
                 onClick={nextClick}
@@ -111,7 +85,12 @@ const FillForm = ({ submitForm }) => {
               page === 'education' && 'active-content'
             }`}
           >
-            <PageTwoContent errors={errors} handleChange={handleChange} />
+            
+              <PageTwo
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              page2={pageTwo}
+            />
 
             <div className="d-flex justify-content-between align-items-center">
               <button
@@ -132,4 +111,4 @@ const FillForm = ({ submitForm }) => {
   );
 };
 
-export default FillForm;
+export default FillSurvey;
