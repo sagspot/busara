@@ -1,3 +1,5 @@
+import parse from 'html-react-parser';
+
 export const errorToast = () => (
   <div className="text-center bg-white text-danger m-0 pt-3">
     <h2 className="m-0 fs-5 fst-italic">
@@ -18,7 +20,7 @@ export const showFailed = (errStatus, errData) => (
       Oops! Something went wrong.
     </h2>
     <p className="text-center mt-2">
-      <b>Status:</b> {errStatus}, <b>Info:</b> {errData}
+      <b>Status:</b> {errStatus}, <b>Info:</b> {parse(errData)}
     </p>
   </div>
 );
