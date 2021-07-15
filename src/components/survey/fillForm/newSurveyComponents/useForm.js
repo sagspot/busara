@@ -260,10 +260,20 @@ const useForm = (callback, validate) => {
       const response = err.response;
       console.log(response.status, response.data.errors[0].errors[0]);
 
-      const errData =
+      let errData =
         response.status === 401
           ? response.data.detail
           : response.data.errors[0].errors[0];
+
+      if (response.status === 400) {
+        let firstErrStr = errData.split(', detail').shift();
+        let lastErrStr = errData
+          .split("string='")
+          .pop()
+          .split("', code")
+          .shift();
+        errData = firstErrStr + ', ' + lastErrStr;
+      }
 
       const submitErr = {
         errData,
