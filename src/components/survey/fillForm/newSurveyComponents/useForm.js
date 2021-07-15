@@ -239,14 +239,14 @@ const useForm = (callback, validate) => {
       const token = JSON.parse(localStorage.getItem('access_token'));
       const response = await axios.post(
         `${baseurl}/api/v1/recruitment/answers/submit/`,
+        data,
         {
-          Headers: {
+          headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
-            HTTP_VERSIONCODE: 200,
-            VERSIONCODE: 200,
+            // HTTP_VERSIONCODE: 200,
+            // VERSIONCODE: 200,
           },
-          data,
         }
       );
       console.log(response);
@@ -257,9 +257,17 @@ const useForm = (callback, validate) => {
       });
       callback();
     } catch (err) {
+      const response = err.response;
+      console.log(response.status, response.data.errors[0].errors[0]);
+
+      const errData =
+        response.status === 401
+          ? response.data.detail
+          : response.data.errors[0].errors[0];
+
       const submitErr = {
-        errData: err.response.data.detail,
-        errStatus: err.response.status,
+        errData,
+        errStatus: response.status,
       };
       setFormCondition({
         ...formCondition,
