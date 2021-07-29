@@ -1,21 +1,19 @@
 import './profile.scss';
 import Layout from '../layout/Layout';
 import { useState, useEffect } from 'react';
-import Loading from '../layout/Loading';
+import { Loading } from '../layout/Alerts';
 
 const Profile = () => {
-  const [loading, setLoading] = useState(true);
-  const [profileDetails, setProfileDetails] = useState({});
-
-  const { name, phone_number, email, approver_level } = profileDetails;
-
   useEffect(() => {
     const profile = JSON.parse(localStorage.getItem('user_profile'));
     setLoading(false);
     setProfileDetails(profile);
   }, []);
 
-  const showLoading = () => <Loading />;
+  const [loading, setLoading] = useState(true);
+  const [profileDetails, setProfileDetails] = useState({});
+
+  const { name, email, phoneNumber, approverLevel } = profileDetails;
 
   const showProfile = () => (
     <section className="card mt-3">
@@ -33,7 +31,7 @@ const Profile = () => {
               Phone Number
             </h3>
 
-            <p className="col-8 fs-5 m-0">{phone_number}</p>
+            <p className="col-8 fs-5 m-0">{phoneNumber}</p>
           </div>
 
           <hr />
@@ -49,7 +47,7 @@ const Profile = () => {
             <h3 className="col-4 text-uppercase m-0 text-muted">
               Approval Level
             </h3>
-            <p className="col-8 fs-5 m-0">{approver_level}</p>
+            <p className="col-8 fs-5 m-0">{approverLevel}</p>
           </div>
         </div>
       </div>
@@ -62,7 +60,7 @@ const Profile = () => {
         <h1 className="pri-brand  fs-2">Personal Information</h1>
       </section>
 
-      {loading ? showLoading() : showProfile()}
+      {loading ? <Loading /> : showProfile()}
     </Layout>
   );
 };

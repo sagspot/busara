@@ -3,11 +3,48 @@ import moment from 'moment';
 import axios from 'axios';
 import { baseurl } from '../../../../config';
 import { useRouteMatch } from 'react-router-dom';
+import { axiosGet } from '../../../utils/axios';
+
+async function getFormFields(id) {
+  const { response = null } = await axiosGet({
+    endpoint: '/api/v1/recruitment/forms/?node_type=Both',
+  });
+  if (response) {
+    const formArr = response.data.forms?.filter((form) => form.id === id);
+    const [
+      {
+        pages: [
+          {
+            sections: [page1Qtns],
+          },
+          {
+            sections: [page2Qtns],
+          },
+        ],
+        id: surveyID,
+      },
+    ] = formArr;
+
+    return { surveyID, page1Qtns, page2Qtns };
+  }
+  return;
+}
 
 const useForm = (callback, validate) => {
-  const id = parseInt(useRouteMatch().params.id);
+  const routeId = parseInt(useRouteMatch().params.id);
   useEffect(() => {
-    getFormFields(id);
+    (async () => {
+      const { surveyID, page1Qtns, page2Qtns } = await getFormFields(routeId);
+
+      setValues({ ...values, surveyID });
+      setFormCondition({
+        ...formCondition,
+        loading: false,
+        loadError: false,
+        pageOne: page1Qtns?.questions,
+        pageTwo: page2Qtns?.questions,
+      });
+    })();
   }, []);
 
   const [values, setValues] = useState({
@@ -115,35 +152,6 @@ const useForm = (callback, validate) => {
       end_time: endTime,
     },
   ];
-
-  const getFormFields = async (id) => {
-    try {
-      const token = JSON.parse(localStorage.getItem('access_token'));
-      const response = await axios.get(
-        `${baseurl}/api/v1/recruitment/forms/?node_type=Both`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      const formArr = await response.data.forms.filter(
-        (form) => form.id === id
-      );
-      const [details] = formArr;
-      const [page1, page2] = details.pages;
-      const [page1Qtns] = page1.sections;
-      const [page2Qtns] = page2.sections;
-      setValues({ ...values, surveyID: details.id });
-
-      setFormCondition({
-        ...formCondition,
-        pageOne: page1Qtns.questions,
-        pageTwo: page2Qtns.questions,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const startSurvey = (e) => {
     const startTimeDiv = e.currentTarget.nextElementSibling;
@@ -288,16 +296,6 @@ const useForm = (callback, validate) => {
     }
   };
 
-  const {
-    hasErrors,
-    page,
-    pageOne,
-    pageTwo,
-    submitting,
-    submitFail,
-    submitError,
-  } = formCondition;
-
   return {
     startSurvey,
     handleChange,
@@ -305,13 +303,7 @@ const useForm = (callback, validate) => {
     previousClick,
     handleBlur,
     handleSubmit,
-    hasErrors,
-    page,
-    pageOne,
-    pageTwo,
-    submitting,
-    submitFail,
-    submitError,
+    formCondition,
   };
 };
 

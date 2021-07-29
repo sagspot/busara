@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import Layout from '../../layout/Layout';
-import axios from 'axios';
-import { baseurl } from '../../../config';
-import Loading from '../../layout/Loading';
+import { Loading } from '../../layout/Alerts';
+import { axiosGet } from '../../utils/axios';
 
 const FormDetail = ({ match }) => {
   useEffect(() => {
@@ -15,14 +14,9 @@ const FormDetail = ({ match }) => {
 
   const getFormDetails = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('access_token'));
-
-      const response = await axios.get(
-        `${baseurl}/api/v1/recruitment/forms/?node_type=Both`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const { response = null } = await axiosGet({
+        endpoint: '/api/v1/recruitment/forms/?node_type=Both',
+      });
 
       const id = parseInt(match.params.id);
 
@@ -43,8 +37,6 @@ const FormDetail = ({ match }) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(string).toLocaleDateString([], options);
   };
-
-  const showLoading = () => <Loading />;
 
   const { name, description, created, valid_from, valid_to } = formDetails;
 
@@ -165,9 +157,7 @@ const FormDetail = ({ match }) => {
   );
 
   return (
-    <Layout title="Survey Details">
-      {loading ? showLoading() : showItem()}
-    </Layout>
+    <Layout title="Survey Details">{loading ? <Loading /> : showItem()}</Layout>
   );
 };
 

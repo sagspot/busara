@@ -1,6 +1,7 @@
 import './signin.scss';
 import useSignin from './useSignin';
 import { Link, Redirect } from 'react-router-dom';
+import { Error, Loading } from '../layout/Alerts';
 
 const Signin = () => {
   const {
@@ -10,31 +11,7 @@ const Signin = () => {
     error,
     loading,
     redirectToReferrer,
-    success,
   } = useSignin();
-
-  const showError = () =>
-    error && <div className="alert alert-danger">{error}</div>;
-
-  const showLoading = () =>
-    loading && (
-      <div className="alert alert-info">
-        <h2>Loading...</h2>
-      </div>
-    );
-
-  const showSuccess = () =>
-    success && (
-      <div className="alert alert-success">
-        <h2>Success! Please wait...</h2>
-      </div>
-    );
-
-  const redirectUser = () => {
-    if (redirectToReferrer) {
-      return <Redirect to="/" />;
-    }
-  };
 
   return (
     <div
@@ -58,10 +35,9 @@ const Signin = () => {
                 <span className="fas fa-user-circle"></span>
               </div>
 
-              <div className="form-title fs-3">SIGN IN</div>
-              {showError()}
-              {showLoading()}
-              {showSuccess()}
+              <div className="form-title fs-3 pb-0">SIGN IN</div>
+              {error && <Error text={error} />}
+              {loading && <Loading />}
 
               <div className=" form-input form-floating mb-3">
                 <input
@@ -106,13 +82,13 @@ const Signin = () => {
                 value="Sign in"
                 className="btn my-4 bg-white"
               />
-              {redirectUser()}
               <div className="form-link">
                 <Link
                   to="/reset-password"
                   className="link-light text-decoration-underline"
                 >
                   Forgot Password?
+                  {redirectToReferrer && <Redirect to="/" />}
                 </Link>
               </div>
             </form>

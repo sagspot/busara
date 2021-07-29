@@ -2,9 +2,9 @@ import '../form.scss';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../../layout/Layout';
-import axios from 'axios';
-import { baseurl } from '../../../config';
-import Loading from '../../layout/Loading';
+import { Error, Loading } from '../../layout/Alerts';
+import { axiosGet } from '../../utils/axios';
+import parse from 'html-react-parser';
 
 const Forms = () => {
   useEffect(() => {
@@ -12,26 +12,22 @@ const Forms = () => {
   }, []);
 
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [forms, setForms] = useState([]);
 
   const getForms = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('access_token'));
-
-      const response = await axios.get(
-        `${baseurl}/api/v1/recruitment/forms/?node_type=Both`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const { response = null, success } = await axiosGet({
+        endpoint: '/api/v1/recruitment/forms/?node_type=Both',
+      });
       setLoading(false);
+      if (!success) return setError(parse(response));
+      if (response.data.forms.length === 0) return setError('No forms found');
       setForms(response.data.forms);
     } catch (err) {
       console.log(err);
     }
   };
-
-  const showLoading = () => <Loading />;
 
   const formatDate = (string) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -72,9 +68,9 @@ const Forms = () => {
     </section>
   );
 
-  return (
-    <Layout title="Surveys">{loading ? showLoading() : showForms()}</Layout>
-  );
+  if (loading) return <Layout title="Surveys">{<Loading />}</Layout>;
+  if (error) return <Layout title="Surveys">{<Error text={error} />}</Layout>;
+  return <Layout title="Surveys">{showForms()}</Layout>;
 };
 
 export default Forms;
