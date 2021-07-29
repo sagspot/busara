@@ -51,7 +51,7 @@ const Sidebar = ({ nav, toggleNav }) => {
             <NavLink
               exact
               activeClassName="active"
-              to="new-survey"
+              to="/new-survey"
               className="sidebar-menu-link text-white p-3 d-flex align-items-center"
             >
               <span className="fas fa-edit pe-3"></span>
