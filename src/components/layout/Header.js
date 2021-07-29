@@ -5,7 +5,7 @@ import { signout } from '../auth';
 
 const ProfileBar = ({ dropdownClass, handleUser, profileDetails }) => {
   const history = useHistory();
-  const { name, approver_level } = profileDetails;
+  const { name, approverLevel } = profileDetails;
 
   return (
     <div
@@ -16,7 +16,7 @@ const ProfileBar = ({ dropdownClass, handleUser, profileDetails }) => {
 
       <div className="me-3 user-select-none">
         <h4 className="fs-6 pri-brand">{name}</h4>
-        <small className="d-inline-block text-muted">{approver_level}</small>
+        <small className="d-inline-block text-muted">{approverLevel}</small>
       </div>
 
       <span className="fas fa-angle-down pri-brand"></span>

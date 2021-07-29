@@ -12,14 +12,20 @@ const FillSurvey = ({ submitForm }) => {
     previousClick,
     handleBlur,
     handleSubmit,
+    formCondition,
+  } = useForm(submitForm);
+  
+  const {
     hasErrors,
-    page,pageOne,pageTwo,
+    page,
+    pageOne,
+    pageTwo,
     submitting,
     submitFail,
     submitError,
-  } = useForm(submitForm);
+  } = formCondition;
 
-  const { errStatus, errData } = submitError; 
+  const { errStatus, errData } = submitError;
 
   return (
     <>
@@ -69,7 +75,7 @@ const FillSurvey = ({ submitForm }) => {
               page1={pageOne}
             />
 
-           <div className="d-flex mb-3">
+            <div className="d-flex mb-3">
               <button
                 className="ms-auto btn text-white my-bg-pri"
                 onClick={nextClick}
@@ -85,8 +91,7 @@ const FillSurvey = ({ submitForm }) => {
               page === 'education' && 'active-content'
             }`}
           >
-            
-              <PageTwo
+            <PageTwo
               handleChange={handleChange}
               handleBlur={handleBlur}
               page2={pageTwo}

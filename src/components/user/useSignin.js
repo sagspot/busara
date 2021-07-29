@@ -1,12 +1,11 @@
-import axios from 'axios';
 import { useState } from 'react';
-import { baseurl } from '../../config';
+import { userDetails } from '../../config';
 import { authenticate, signin } from '../auth';
+import { axiosGet } from '../utils/axios';
 
 const useSignin = () => {
   const [values, setValues] = useState({
-    grant_type: 'password',
-    client_id: 'zVs3J7FZupB3TLPskQOy1xHLwYTRkzUSf2rdTDCu',
+    ...userDetails,
     username: 'oliversagala1@gmail.com',
     password: '6tn$&47&ytw^K5',
   });
@@ -14,7 +13,6 @@ const useSignin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,28 +21,21 @@ const useSignin = () => {
     setError(false);
   };
 
-  const { grant_type, client_id, username, password } = values;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setError(false);
     setLoading(true);
 
     try {
-      const response = await signin({
-        grant_type,
-        client_id,
-        username,
-        password,
-      });
+      const response = await signin(values);
 
       const access_token = response.data.access_token;
-      authenticate(access_token, () => {
-        saveProfile();
-      });
+      authenticate(access_token, saveProfile);
     } catch (err) {
       const error =
-        err.response.data.error === 'invalid_request' || 'invalid_grant'
+        err.response.data.error === 'invalid_request' ||
+        err.response.data.error === 'invalid_grant'
           ? err.response.data.error_description
           : err.response.data.error;
 
@@ -54,20 +45,24 @@ const useSignin = () => {
   };
 
   const saveProfile = async () => {
-    try {
-      const token = JSON.parse(localStorage.getItem('access_token'));
+    const { response = null, success } = await axiosGet({
+      endpoint: '/api/v1/users/current-user',
+    });
+    setLoading(false);
+    if (!success) return setError(response?.detail);
 
-      const response = await axios.get(`${baseurl}/api/v1/users/current-user`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      localStorage.setItem('user_profile', JSON.stringify(response.data));
-      setLoading(false);
-      setSuccess(true);
-      setRedirectToReferrer(true);
-      return;
-    } catch (err) {
-      console.log(err.data);
-    }
+    const {
+      name,
+      email,
+      phone_number: phoneNumber,
+      approver_level: approverLevel,
+    } = response.data;
+    localStorage.setItem(
+      'user_profile',
+      JSON.stringify({ name, email, phoneNumber, approverLevel })
+    );
+    setRedirectToReferrer(true);
+    return;
   };
 
   return {
@@ -76,7 +71,6 @@ const useSignin = () => {
     error,
     loading,
     redirectToReferrer,
-    success,
     values,
   };
 };

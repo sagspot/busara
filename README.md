@@ -43,9 +43,7 @@ A user can also view their profile and can start a new survey.
 
 ## Environment variables
 
-`CHOKIDAR_USEPOLLING=true`
-
-`REACT_APP_API_URL=http://fullstack-role.busara.io`
+Make your environment variables based on the `.env.example` file
 
 ## Project Status
 
